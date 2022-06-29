@@ -1,0 +1,16 @@
+{
+    "SANDBOX": {
+        "clientId": "BryantAl-San-SBX-96f5a01d1-2d5d1702",
+        "clientSecret": "SBX-6f5a01d150b5-c40f-4a60-9e4e-612c",
+        "devid": "48671bb4-502d-4791-8a45-39a0f8f17817",
+        "redirectUri": "-- redirect uri ---",
+        "baseUrl": "api.sandbox.ebay.com" 
+    },
+    "PRODUCTION": {
+        "clientId": "---Client Id---",
+        "clientSecret": "--- client secret---",
+        "devid": "-- dev id ---",
+        "redirectUri": "-- redirect uri ---",
+        "baseUrl": "api.ebay.com" 
+    }
+}

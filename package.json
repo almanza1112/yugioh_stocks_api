@@ -9,8 +9,10 @@
   "author": "Bryant Almanza",
   "license": "ISC",
   "dependencies": {
+    "ebay-oauth-nodejs-client": "^1.2.1",
     "express": "^4.18.1",
-    "mongoose": "^6.4.0"
+    "mongoose": "^6.4.0",
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

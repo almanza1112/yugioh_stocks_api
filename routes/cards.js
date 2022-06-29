@@ -12,21 +12,21 @@ const token = "v^1.1#i^1#r^0#f^0#I^3#p^3#t^H4sIAAAAAAAAAOVYbWwcxRnO+Suy3FCVpoACp
 //GET CARDS
 router.get('/', async (req, res) => {
     const authorizationUrl = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-    const encodedClientID = Buffer.from('BryantAl-San-SBX-96f5a01d1-2d5d1702', 'base64')
-    const encodedClientSecret = Buffer.from('SBX-6f5a01d150b5-c40f-4a60-9e4e-612c', 'base64')
-    const authorizationOptions = {
-        'method':'POST',
-        'headers':{
-            'Content-Type':'application/x-wwww-form-urlencoded',
-            'Authorization':'Basic ' + encodedClientID +':'+encodedClientSecret
-        },
-        'body':JSON.stringify({
-            'grant_type':'client_credentials',
-            'scope':encodeURIComponent('https://api.ebay.com/oauth/api_scope')
-        })
-    }
+    const encodedClientID = Buffer.from('BryantAl-San-SBX-96f5a01d1-2d5d1702')
+    const encodedClientSecret = Buffer.from('SBX-6f5a01d150b5-c40f-4a60-9e4e-612c')
+    const authBody={
+        'grant_type':'client_credentials',
+        'scope':encodeURIComponent('https://api.ebay.com/oauth/api_scope')}
 
-    const authorizationResponse = await fetch(authorizationUrl, authorizationOptions)
+    
+    const authorizationResponse = await fetch(authorizationUrl, {
+        method: 'post',
+        body: JSON.stringify(authBody),
+        headers: {
+            'Content-Type':'application/x-www-form-urlencoded',
+            'Authorization':'Basic ' + encodedClientID.toString('base64') +':'+encodedClientSecret.toString('base64')
+        }
+    })
         .then(res => {
             console.log(res.status)
         })

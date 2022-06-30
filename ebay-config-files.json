@@ -3,7 +3,7 @@
         "clientId": "BryantAl-San-SBX-96f5a01d1-2d5d1702",
         "clientSecret": "SBX-6f5a01d150b5-c40f-4a60-9e4e-612c",
         "devid": "48671bb4-502d-4791-8a45-39a0f8f17817",
-        "redirectUri": "-- redirect uri ---",
+        "redirectUri": "Bryant_Almanza-BryantAl-San-SB-tipry",
         "baseUrl": "api.sandbox.ebay.com" 
     },
     "PRODUCTION": {

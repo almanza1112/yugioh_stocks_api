@@ -13,73 +13,34 @@ const ebayAuthToken = new EbayAuthToken({
 router.get('/', async (req, res) => {
     (async () => {
         
-        const token = await ebayAuthToken.getApplicationToken('SANDBOX');
-        console.log(token);
-    })();
+        const token = await ebayAuthToken.getApplicationToken('SANDBOX', 'https://api.ebay.com/oauth/api_scope');
+        const parsedToken = JSON.parse(token)
+        const url = 'https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=drone&limit=3'
     
-    /*
-
-    
-const authorizationUrl = "https://api.sandbox.ebay.com/identity/v1/oauth2/token"
-    const encodedClientID = Buffer.from('BryantAl-San-SBX-96f5a01d1-2d5d1702')
-    const encodedClientSecret = Buffer.from('SBX-6f5a01d150b5-c40f-4a60-9e4e-612c')
-    const encodedCredentials = Buffer.from('BryantAl-San-SBX-96f5a01d1-2d5d1702:SBX-6f5a01d150b5-c40f-4a60-9e4e-612c')
-    const authBody={
-        'grant_type':'client_credentials',
-        'scope':encodeURIComponent('https://api.ebay.com/oauth/api_scope')}
-
-    console.log(encodedCredentials.toString('base64'))
-    const authorizationResponse = await fetch(authorizationUrl, {
-        method: 'post',
-        body: JSON.stringify(authBody),
-        headers: {
-            'Content-Type':'application/x-www-form-urlencoded',
-            'Authorization':'Basic ' + encodedCredentials.toString('base64')
-        }
-    })
-        .then(res => {
-            console.log(res.status)
-        })
-        .catch(err => {
-            console.error({'message':err.message})
-        })
-
-*/
-     
-    /**
-      const url = 'https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=drone&limit=3'
-    
-     const response = await fetch(url ,{
-        method: 'post',
+     const respizzle = await fetch(url ,{
+        method: 'GET',
         headers:{
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json',
-            'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US',
+            'Authorization':'Bearer ' + parsedToken.access_token,
+            'Content-Type':'application/json',
+            'X-EBAY-C-MARKETPLACE-ID':'EBAY_US',
             'X-EBAY-C-ENDUSERCTX':'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>'
         }
-     })
+        })
         .then(res => {
             if (res.ok){
-                console.log('success')
+                console.log(res.headers)
             } else {
-                console.log("i suck")
+                console.log("i suck: " + res.status)
             }
         })
         .catch(err => {
             console.error({'message': err.message})
         })
     
-    res.json(response)
-      
-      
-     
-     */
-      
-     
-      
-    
-    
-   
+    res.send(respizzle)
+
+
+    })();   
 })
 
 module.exports = router

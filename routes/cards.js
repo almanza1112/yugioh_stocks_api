@@ -4,13 +4,12 @@ const router = express.Router()
 const Card = require('../models/card')
 const fetch = require('node-fetch')
 const EbayAuthToken = require('ebay-oauth-nodejs-client')
-const zlib = require('zlib');
-
 
 
 const ebayAuthToken = new EbayAuthToken({
     filePath: 'ebay-config-files.json'
 })
+
 //GET CARDS
 router.get('/', async (req, res) => {
     (async () => {
@@ -27,18 +26,9 @@ router.get('/', async (req, res) => {
                 'X-EBAY-C-ENDUSERCTX':'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>',
                 'encoding': null
             }
-            })
-            /*
-            .then(res => {
-                if (res.ok){
-                              
-                } else {
-                    console.log("i suck: " + res.status)
-                }
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.error({'FETCH MESSAGE': err.message})
-            })*/
+            })
 
         const data  = await respizzle.json()
         console.log(data)

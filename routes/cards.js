@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
         const data  = await respizzle.json()
         console.log(data)
         
-        res.send(respizzle)
+        res.send(data)
     })();   
 })
 

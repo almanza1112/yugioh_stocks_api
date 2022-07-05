@@ -3,11 +3,15 @@ const mongoose = require('mongoose')
 const cardSchema = new mongoose.Schema({
     name:{
         type: String, 
-        required: false
+        required: true
     },
     set:{
         type: String,
-        required: false
+        required: true
+    },
+    rarity:{
+        type: String, 
+        required: true
     }
 })
 

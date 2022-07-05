@@ -10,8 +10,8 @@ const ebayAuthToken = new EbayAuthToken({
     filePath: 'ebay-config-files.json'
 })
 
-//GET CARDS
-router.get('/', async (req, res) => {
+//GET CARDS EBAY
+router.get('/ebay', async (req, res) => {
     (async () => {
         const token = await ebayAuthToken.getApplicationToken('SANDBOX', 'https://api.ebay.com/oauth/api_scope');
         const parsedToken = JSON.parse(token)
@@ -35,6 +35,23 @@ router.get('/', async (req, res) => {
         
         res.send(data)
     })();   
+})
+
+
+//GET CARDS AMAZON
+router.get('/ygo', async (req, res) => {
+
+    const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
+
+    const respizzle = await fetch(url, {
+        method: 'GET'
+    }).catch(err => {
+        console.log({'Error message':err.message})
+    })
+    
+    const data = await respizzle.json()
+    
+    res.send(data)
 })
 
 module.exports = router

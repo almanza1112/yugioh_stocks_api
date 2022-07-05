@@ -4,7 +4,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 
-const uri = "mongodb+srv://almanza1112:compaqmv540@cluster0.rttnp.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://almanza1112:compaqmv540@cluster0.rttnp.mongodb.net/yugioh_stocks?retryWrites=true&w=majority";
 
 mongoose.connect(uri)
 //mongoose.connect(process.env.DATABASE_URL)

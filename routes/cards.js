@@ -61,8 +61,8 @@ router.post('/create', async (req, res) => {
 })
 
 
-//GET CARDS AMAZON
-router.get('/ygo', async (req, res) => {
+//POPULATE DB
+router.get('/ygopopulate', async (req, res) => {
 
     const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?'
 

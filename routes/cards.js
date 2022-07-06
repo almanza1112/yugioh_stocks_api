@@ -64,7 +64,7 @@ router.post('/create', async (req, res) => {
 //GET CARDS AMAZON
 router.get('/ygo', async (req, res) => {
 
-    const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?id=50588353'
+    const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?'
 
     const respizzle = await fetch(url, {
         method: 'GET'
@@ -73,28 +73,35 @@ router.get('/ygo', async (req, res) => {
     })
     
     const respuesta = await respizzle.json()
-    console.log(respuesta.data[0].id)
-    
-    const card = new Card({
-        card_id: respuesta.data[0].id,
-        name: respuesta.data[0].name,
-        type: respuesta.data[0].type,
-        description: respuesta.data[0].desc,
-        race: respuesta.data[0].race,
-        level: respuesta.data[0].level,
-        rank: respuesta.data[0].rank,
-        scale: respuesta.data[0].scale,
-        linkval: respuesta.data[0].linkval,
-        linkmarkers: respuesta.data[0].linkmarkers,
-        card_sets: respuesta.data[0].card_sets
-    })
+ 
+    for (let i = 0; i < respuesta.data.length; i++) {
 
-    try {
-        const newCard = await card.save()
-    } catch (err){
-        res.status(400).json({message: err.message})
-    } 
-    //for (let i = 0; i < data.data.length; i++) {}
+   
+        const card = new Card({
+            card_id: respuesta.data[i].id,
+            name: respuesta.data[i].name,
+            type: respuesta.data[i].type,
+            description: respuesta.data[i].desc,
+            race: respuesta.data[i].race,
+            level: respuesta.data[i].level,
+            rank: respuesta.data[i].rank,
+            scale: respuesta.data[i].scale,
+            linkval: respuesta.data[i].linkval,
+            linkmarkers: respuesta.data[i].linkmarkers,
+            card_sets: respuesta.data[i].card_sets,
+            attack: respuesta.data[i].atk,
+            defense: respuesta.data[i].def,
+            attribute: respuesta.data[i].attribute,
+            archetype: respuesta.data[i].archetype,
+            banlist_info: respuesta.data[i].banlist_info
+        })
+    
+        try {
+            const newCard = await card.save()
+        } catch (err){
+            res.status(400).json({message: err.message})
+        } 
+    }
     res.send("success")
 })
 

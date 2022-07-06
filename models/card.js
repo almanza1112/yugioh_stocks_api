@@ -15,6 +15,9 @@ const cardSchema = new mongoose.Schema({
     defense: String,
     attribute: String,
     archetype: String,
+    banlist_info:{
+        ban_tcg: String,
+        ban_ocg: String },
     card_sets:[{
         set_name: String,
         set_code: String,

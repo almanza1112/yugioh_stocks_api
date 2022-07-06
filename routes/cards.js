@@ -37,11 +37,34 @@ router.get('/ebay', async (req, res) => {
     })();   
 })
 
+router.post('/create', async (req, res) => {
+
+    const card = new Card({
+        card_id: req.body.card_id,
+        name: req.body.name,
+        type: req.body.type,
+        description: req.body.description,
+        linkmarkers: req.body.linkmarkers,
+        card_sets: {
+            set_name: req.body.card_sets.set_name,
+            set_code: req.body.card_sets.set_code,
+            set_rarity: req.body.card_sets.set_rarity
+        }
+    })
+
+    try {
+        const newCard = await card.save()
+        res.status(201).json(newCard)
+    } catch (err){
+        res.status(400).json({message: err.message})
+    }
+})
+
 
 //GET CARDS AMAZON
 router.get('/ygo', async (req, res) => {
 
-    const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php'
+    const url = 'https://db.ygoprodeck.com/api/v7/cardinfo.php?id=50588353'
 
     const respizzle = await fetch(url, {
         method: 'GET'
@@ -49,9 +72,30 @@ router.get('/ygo', async (req, res) => {
         console.log({'Error message':err.message})
     })
     
-    const data = await respizzle.json()
+    const respuesta = await respizzle.json()
+    console.log(respuesta.data[0].id)
     
-    res.send(data)
+    const card = new Card({
+        card_id: respuesta.data[0].id,
+        name: respuesta.data[0].name,
+        type: respuesta.data[0].type,
+        description: respuesta.data[0].desc,
+        race: respuesta.data[0].race,
+        level: respuesta.data[0].level,
+        rank: respuesta.data[0].rank,
+        scale: respuesta.data[0].scale,
+        linkval: respuesta.data[0].linkval,
+        linkmarkers: respuesta.data[0].linkmarkers,
+        card_sets: respuesta.data[0].card_sets
+    })
+
+    try {
+        const newCard = await card.save()
+    } catch (err){
+        res.status(400).json({message: err.message})
+    } 
+    //for (let i = 0; i < data.data.length; i++) {}
+    res.send("success")
 })
 
 module.exports = router

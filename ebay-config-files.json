@@ -7,9 +7,9 @@
         "baseUrl": "api.sandbox.ebay.com" 
     },
     "PRODUCTION": {
-        "clientId": "---Client Id---",
-        "clientSecret": "--- client secret---",
-        "devid": "-- dev id ---",
+        "clientId": "BryantAl-San-PRD-ab15faad2-8893733a",
+        "clientSecret": "PRD-b15faad2482e-190c-4075-bff9-c213",
+        "devid": "48671bb4-502d-4791-8a45-39a0f8f17817",
         "redirectUri": "-- redirect uri ---",
         "baseUrl": "api.ebay.com" 
     }

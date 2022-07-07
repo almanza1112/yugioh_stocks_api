@@ -13,9 +13,9 @@ const ebayAuthToken = new EbayAuthToken({
 //GET CARDS EBAY
 router.get('/ebay', async (req, res) => {
     (async () => {
-        const token = await ebayAuthToken.getApplicationToken('SANDBOX', 'https://api.ebay.com/oauth/api_scope');
+        const token = await ebayAuthToken.getApplicationToken('PRODUCTION', 'https://api.ebay.com/oauth/api_scope');
         const parsedToken = JSON.parse(token)
-        const url = 'https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=drone&limit=3'
+        const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q=pokemon&limit=3'
     
         const respizzle = await fetch(url ,{
             method: 'GET',

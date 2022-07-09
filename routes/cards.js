@@ -15,7 +15,7 @@ router.get('/ebay', async (req, res) => {
     (async () => {
         const token = await ebayAuthToken.getApplicationToken('PRODUCTION', 'https://api.ebay.com/oauth/api_scope');
         const parsedToken = JSON.parse(token)
-        const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q=pokemon&limit=3'
+        const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q=yugioh&limit=3'
     
         const respizzle = await fetch(url ,{
             method: 'GET',
@@ -23,8 +23,7 @@ router.get('/ebay', async (req, res) => {
                 'Authorization':'Bearer ' + parsedToken.access_token,
                 'Content-Type':'application/json',
                 'X-EBAY-C-MARKETPLACE-ID':'EBAY_US',
-                'X-EBAY-C-ENDUSERCTX':'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>',
-                'encoding': null
+                'X-EBAY-C-ENDUSERCTX':'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>'
             }
             }).catch(err => {
                 console.error({'FETCH MESSAGE': err.message})

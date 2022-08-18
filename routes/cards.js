@@ -10,6 +10,11 @@ const ebayAuthToken = new EbayAuthToken({
     filePath: 'ebay-config-files.json'
 })
 
+router.get('/', (req, res) => {
+    res.send("we on baby")
+})
+
+
 //GET CARDS EBAY
 router.get('/ebay', async (req, res) => {
     (async () => {

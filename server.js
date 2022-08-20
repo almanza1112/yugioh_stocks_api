@@ -18,4 +18,8 @@ app.use('/users', usersRouteer)
 const cardRouter = require('./routes/cards')
 app.use('/cards', cardRouter)
 
-app.listen(process.env.PORT || 5000 , () => console.log('Server Started'))
+//Uncomment below for local testing
+app.listen(3000, () => console.log('Server Started')) 
+
+//Uncomment below for push
+//app.listen(process.env.PORT || 5000 , () => console.log('Server Started'))

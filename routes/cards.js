@@ -10,19 +10,29 @@ const ebay = require('../grabbers/ebay')
 
 
 router.get('/', (req, res) => {
+
+    const amazonRes = scrapers.amazon('bode-en069', 'Near Mint', '1st Edition')
+    amazonRes.then(result => {
+        //console.log(result)
+        res.send("amazonRes: " + result)
+
+    }) 
+
     /*
     const tntRes = scrapers.trollandtoad('small+world', 'Near Mint', '1st Edition')
     tntRes.then(result => {
         console.log(result)
         res.send("tntRes: " +  result[0].cardInfo)
 
-    }) */
+    }) 
 
     const ebayRes = ebay.ebay('bode-en069', 'Near Mint', '1st Edition')
     ebayRes.then(result => {
         console.log(result)
         res.send('ebayRes: ' + result)
     })
+        
+    */
 
 })
 

@@ -29,9 +29,9 @@ async function trollandtoad(setCode, condition, edition) {
 }
 
 
-async function amazon(searchWords) {
+async function amazon(setCode, condition, edition) {
 
-    const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + searchWords
+    const url = "https://www.amazon.com/s?k=" + setCode
 
     // get html from trollandtoad
     const response = await fetch(url)
@@ -46,10 +46,12 @@ async function amazon(searchWords) {
     const cards = []
     const $ = cheerio.load(body, null, false) //false to disable introducing <html>, <head>, and <body> elements
 
-    $('.col-2', body).each(function () {
-        const cardText = $(this).text()
-        console.log(cardText)
-        cards.push({ cardText })
+    // find all instances of data-component-type that equals s-search-results
+    $('div[data-component-type="s-search-result"]', body).each((index, element) => {
+        const cardInfo = $(element).find('h2').text()
+        if (cardInfo.includes(setCode.toUpperCase())) { //setCode has to be uppercase
+            cards.push({ cardInfo })
+        }
     })
 
     return cards
@@ -58,4 +60,4 @@ async function amazon(searchWords) {
 
 
 
-module.exports = { trollandtoad };
+module.exports = { trollandtoad, amazon };

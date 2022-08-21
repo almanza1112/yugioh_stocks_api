@@ -12,9 +12,11 @@ const ebayAuthToken = new EbayAuthToken({
 })
 
 router.get('/', (req, res) => {
-    //const tntS = new tntScraper()
-    tntScraper.trollandtoad('small+world')
-    res.send("we on baby!!!")
+    const tntRes = tntScraper.trollandtoad('small+world')
+    tntRes.then(result => {
+        res.send("tntRes: " + result[1])
+
+    })
 })
 
 

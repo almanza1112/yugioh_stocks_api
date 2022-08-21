@@ -4,7 +4,6 @@ const fetch = require('node-fetch')
 async function trollandtoad (searchWords){
 
     const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + searchWords
-    console.log(url)
 
     // get html from trollandtoad
     const response = await fetch(url)    
@@ -16,8 +15,15 @@ async function trollandtoad (searchWords){
     const body = await response.text()
 
     // parse html text
-    const $ = cheerio.load(body)
+    const cards = []
+    const $ = cheerio.load(body, null, false) //false to disable introducing <html>, <head>, and <body> elements
+    $('.col-2', body).each(function(){
+        const cardText = $(this).text()
+        console.log(cardText)
+        cards.push({cardText})
+    })
 
+    return cards
 }
 
-module.exports = trollandtoad();
+module.exports = {trollandtoad};

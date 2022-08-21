@@ -3,49 +3,29 @@ const card = require('../models/card')
 const router = express.Router()
 const Card = require('../models/card')
 const fetch = require('node-fetch')
-const EbayAuthToken = require('ebay-oauth-nodejs-client')
 
-const scrapers = require('../scrapers')
+const scrapers = require('../grabbers/scrapers')
+const ebay = require('../grabbers/ebay')
 
-const ebayAuthToken = new EbayAuthToken({
-    filePath: 'ebay-config-files.json'
-})
+
 
 router.get('/', (req, res) => {
+    /*
     const tntRes = scrapers.trollandtoad('small+world', 'Near Mint', '1st Edition')
     tntRes.then(result => {
         console.log(result)
         res.send("tntRes: " +  result[0].cardInfo)
 
+    }) */
+
+    const ebayRes = ebay.ebay()
+    ebayRes.then(result => {
+        console.log(result)
+        res.send('ebayRes: ' + result)
     })
+
 })
 
-
-//GET CARDS EBAY
-router.get('/ebay', async (req, res) => {
-    (async () => {
-        const token = await ebayAuthToken.getApplicationToken('PRODUCTION', 'https://api.ebay.com/oauth/api_scope');
-        const parsedToken = JSON.parse(token)
-        const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q=yugioh&limit=3'
-    
-        const respizzle = await fetch(url ,{
-            method: 'GET',
-            headers:{
-                'Authorization':'Bearer ' + parsedToken.access_token,
-                'Content-Type':'application/json',
-                'X-EBAY-C-MARKETPLACE-ID':'EBAY_US',
-                'X-EBAY-C-ENDUSERCTX':'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>'
-            }
-            }).catch(err => {
-                console.error({'FETCH MESSAGE': err.message})
-            })
-
-        const data  = await respizzle.json()
-        console.log(data)
-        
-        res.send(data)
-    })();   
-})
 
 router.post('/create', async (req, res) => {
 

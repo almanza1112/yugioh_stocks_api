@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 
     }) */
 
-    const ebayRes = ebay.ebay()
+    const ebayRes = ebay.ebay('bode-en069', 'Near Mint', '1st Edition')
     ebayRes.then(result => {
         console.log(result)
         res.send('ebayRes: ' + result)

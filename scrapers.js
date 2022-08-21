@@ -1,7 +1,35 @@
 const cheerio = require('cheerio');
 const fetch = require('node-fetch')
 
-async function trollandtoad(searchWords) {
+async function trollandtoad(setCode, condition, edition) {
+
+    const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + setCode
+
+    // get html from trollandtoad
+    const response = await fetch(url)
+        .catch(err => {
+            console.log('ERROR!!!: ' + err.message)
+        })
+
+    // using await to ensure promise resolves
+    const body = await response.text()
+
+    // parse html text
+    const cards = []
+    const $ = cheerio.load(body, null, false) //false to disable introducing <html>, <head>, and <body> elements
+    const buyingContainer = $('buying-options-container').html()
+    $('.position-relative', buyingContainer).each(function () {
+        const cardInfo = $(this).text()
+        if(cardInfo.includes(condition) && cardInfo.includes(edition)){
+            cards.push({ cardInfo })
+        }
+    })
+
+    return cards
+}
+
+
+async function amazon(searchWords) {
 
     const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + searchWords
 
@@ -17,6 +45,7 @@ async function trollandtoad(searchWords) {
     // parse html text
     const cards = []
     const $ = cheerio.load(body, null, false) //false to disable introducing <html>, <head>, and <body> elements
+
     $('.col-2', body).each(function () {
         const cardText = $(this).text()
         console.log(cardText)
@@ -25,5 +54,8 @@ async function trollandtoad(searchWords) {
 
     return cards
 }
+
+
+
 
 module.exports = { trollandtoad };

@@ -12,9 +12,10 @@ const ebayAuthToken = new EbayAuthToken({
 })
 
 router.get('/', (req, res) => {
-    const tntRes = scrapers.trollandtoad('small+world')
+    const tntRes = scrapers.trollandtoad('small+world', 'Near Mint', '1st Edition')
     tntRes.then(result => {
-        res.send("tntRes: " + result[1])
+        console.log(result)
+        res.send("tntRes: " +  result[0].cardInfo)
 
     })
 })

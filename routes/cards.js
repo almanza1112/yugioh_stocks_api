@@ -5,14 +5,14 @@ const Card = require('../models/card')
 const fetch = require('node-fetch')
 const EbayAuthToken = require('ebay-oauth-nodejs-client')
 
-const tntScraper = require('../scrapers/trollandtoad_scraper')
+const scrapers = require('../scrapers')
 
 const ebayAuthToken = new EbayAuthToken({
     filePath: 'ebay-config-files.json'
 })
 
 router.get('/', (req, res) => {
-    const tntRes = tntScraper.trollandtoad('small+world')
+    const tntRes = scrapers.trollandtoad('small+world')
     tntRes.then(result => {
         res.send("tntRes: " + result[1])
 

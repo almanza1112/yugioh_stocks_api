@@ -33,7 +33,7 @@ async function amazon(setCode, condition, edition) {
 
     const url = "https://www.amazon.com/s?k=" + setCode
 
-    // get html from trollandtoad
+    // get html from amazon
     const response = await fetch(url)
         .catch(err => {
             console.log('ERROR!!!: ' + err.message)
@@ -48,9 +48,22 @@ async function amazon(setCode, condition, edition) {
 
     // find all instances of data-component-type that equals s-search-results
     $('div[data-component-type="s-search-result"]', body).each((index, element) => {
-        const cardInfo = $(element).find('h2').text()
-        if (cardInfo.includes(setCode.toUpperCase())) { //setCode has to be uppercase
-            cards.push({ cardInfo })
+
+        // gets title to check if correct card...see if statement below
+        const cardInfo = $(element).find('h2')
+        const cardText = cardInfo.text();
+
+        // generate the url for listing
+        const cardUrl = "https://www.amazon.com" + cardInfo.find('a').attr('href')
+
+        // gets price of listing
+        const cardPriceWhole = $(element).find('.a-price-whole').text()
+        const cardPriceFraction = $(element).find('.a-price-fraction').text()
+        const cardPrice = cardPriceWhole + cardPriceFraction
+
+        // where the title gets checked to assure correct listing
+        if (cardText.includes(setCode.toUpperCase())) { //setCode has to be uppercase
+            cards.push({ cardUrl, cardPrice })
         }
     })
 

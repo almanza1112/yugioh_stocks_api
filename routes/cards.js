@@ -11,12 +11,11 @@ const ebay = require('../grabbers/ebay')
 
 router.get('/', (req, res) => {
 
-    const tntRes = scrapers.trollandtoad('mp21-en135', 'Near Mint', '1st Edition')
-    tntRes.then(result => {
+    const ebayRes = ebay.ebay('bode-en069', '1st', 'Near Mint')
+    ebayRes.then(result => {
         //console.log(result)
-        res.send("tntRes: " + result[0].cardPrice)
-
-    }) 
+        res.send('ebayRes: ' + result)
+    })
 
     /*
 
@@ -27,14 +26,17 @@ router.get('/', (req, res) => {
 
     }) 
 
+     const tntRes = scrapers.trollandtoad('mp21-en135', 'Near Mint', '1st Edition')
+    tntRes.then(result => {
+        //console.log(result)
+        res.send("tntRes: " + result[0].cardPrice)
+
+    }) 
+
 
     
 
-    const ebayRes = ebay.ebay('bode-en069', 'Near Mint', '1st Edition')
-    ebayRes.then(result => {
-        console.log(result)
-        res.send('ebayRes: ' + result)
-    })
+    
         
     */
 

@@ -7,9 +7,11 @@ const ebayAuthToken = new EbayAuthToken({
 })
 
 async function ebay (setCode, edition, condition) {
+    const from = "EBAY"
     const token = await ebayAuthToken.getApplicationToken('PRODUCTION', 'https://api.ebay.com/oauth/api_scope');
     const parsedToken = JSON.parse(token)
-    const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q='+ setCode + '&limit=5'
+    const limit = 6;
+    const url = 'https://api.ebay.com/buy/browse/v1/item_summary/search?q=' + setCode + "+"+ edition+'&limit=' + limit + "&sort=price&filter=buyingOptions%3A%7BFIXED_PRICE%7D"
 
     const respizzle = await fetch(url, {
         method: 'GET',
@@ -25,7 +27,25 @@ async function ebay (setCode, edition, condition) {
 
     const data = await respizzle.json()
 
-    return data
+    const cards = []
+
+    data.itemSummaries.forEach(element => {
+        const cardPriceBeforeShipping = element.price.value
+        const cardUrl = element.itemAffiliateWebUrl
+        let cardShippingCost = 0;
+        let cardPrice = 0;
+        // For some reason listings will return undefined shippingOptions, if statement filters them out
+        if (element.shippingOptions != undefined) {
+            cardShippingCost = element.shippingOptions[0].shippingCost.value
+            const cardPriceUnfixed = Number(cardPriceBeforeShipping) + Number(cardShippingCost) // Number() is used to avoid concatenation
+            cardPrice = cardPriceUnfixed.toFixed(2)// toFixed() is used to round the decimals the float values give
+            cards.push({ from, cardPrice, cardUrl })
+        }
+    })
+
+    console.log(cards)
+
+    return cards
 }  
 
 module.exports = {ebay}

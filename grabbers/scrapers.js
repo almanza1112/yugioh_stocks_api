@@ -18,10 +18,13 @@ async function trollandtoad(setCode, condition, edition) {
     const cards = []
     const $ = cheerio.load(body, null, false) //false to disable introducing <html>, <head>, and <body> elements
     const buyingContainer = $('buying-options-container').html()
-    $('.position-relative', buyingContainer).each(function () {
-        const cardInfo = $(this).text()
+    $('.position-relative', buyingContainer).each( (index, element) => {
+        const cardInfo = $(element).text()
+        const cardTextSplit = cardInfo.split('$')
+        const cardPriceSplit = String(cardTextSplit[1]).split("\n")
+        const cardPrice = cardPriceSplit[0]
         if(cardInfo.includes(condition) && cardInfo.includes(edition)){
-            cards.push({ cardInfo })
+            cards.push({ cardPrice, url })
         }
     })
 
@@ -69,8 +72,6 @@ async function amazon(setCode, condition, edition) {
 
     return cards
 }
-
-
 
 
 module.exports = { trollandtoad, amazon };

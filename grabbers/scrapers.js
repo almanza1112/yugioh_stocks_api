@@ -3,10 +3,10 @@ const fetch = require('node-fetch')
 
 async function trollandtoad(setCode, condition, edition) {
     const from = "TROLL"
-    const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + setCode
+    const cardUrl = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + setCode
 
     // get html from trollandtoad
-    const response = await fetch(url)
+    const response = await fetch(cardUrl)
         .catch(err => {
             console.log('ERROR!!!: ' + err.message)
         })
@@ -24,7 +24,7 @@ async function trollandtoad(setCode, condition, edition) {
         const cardPriceSplit = String(cardTextSplit[1]).split("\n")
         const cardPrice = cardPriceSplit[0]
         if(cardInfo.includes(condition) && cardInfo.includes(edition)){
-            cards.push({ from, cardPrice, url })
+            cards.push({ from, cardPrice, cardUrl })
         }
     })
 
@@ -66,7 +66,7 @@ async function amazon(setCode, condition, edition) {
 
         // where the title gets checked to assure correct listing
         if (cardText.includes(setCode.toUpperCase())) { //setCode has to be uppercase
-            cards.push({ from, cardUrl, cardPrice })
+            cards.push({ from, cardPrice, cardUrl })
         }
     })
 

@@ -43,8 +43,6 @@ async function ebay (setCode, edition, condition) {
         }
     })
 
-    console.log(cards)
-
     return cards
 }  
 

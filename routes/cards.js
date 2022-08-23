@@ -10,35 +10,22 @@ const ebay = require('../grabbers/ebay')
 
 
 router.get('/', (req, res) => {
-
-    const ebayRes = ebay.ebay('bode-en069', '1st', 'Near Mint')
-    ebayRes.then(result => {
-        //console.log(result)
-        res.send('ebayRes: ' + result)
-    })
-
-    /*
-
+    const tntRes = scrapers.trollandtoad('mp21-en135', 'Near Mint', '1st Edition')
+    const ebayRes = ebay.ebay('mp21-en135', '1st', 'Near Mint')
     const amazonRes = scrapers.amazon('mp21-en135', 'Near Mint', '1st Edition')
-    amazonRes.then(result => {
-        //console.log(result)
-        res.send("amazonRes: " + result)
 
-    }) 
+    const promises =[tntRes, ebayRes, amazonRes]
+    Promise.all(promises).then(responses => {
 
-     const tntRes = scrapers.trollandtoad('mp21-en135', 'Near Mint', '1st Edition')
-    tntRes.then(result => {
-        //console.log(result)
-        res.send("tntRes: " + result[0].cardPrice)
+        // merge arrays into one for sorting
+        const listings = [...responses[0], ...responses[1], ...responses[2]]
 
-    }) 
+        // sort array
+        listings.sort((a,b) => parseFloat(a.cardPrice) - parseFloat(b.cardPrice))
 
-
+        res.send(listings)
     
-
-    
-        
-    */
+    })
 
 })
 

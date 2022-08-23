@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const fetch = require('node-fetch')
 
 async function trollandtoad(setCode, condition, edition) {
-
+    const from = "TROLL"
     const url = "https://trollandtoad.com/category.php?selected-cat=4736&search-words=" + setCode
 
     // get html from trollandtoad
@@ -24,7 +24,7 @@ async function trollandtoad(setCode, condition, edition) {
         const cardPriceSplit = String(cardTextSplit[1]).split("\n")
         const cardPrice = cardPriceSplit[0]
         if(cardInfo.includes(condition) && cardInfo.includes(edition)){
-            cards.push({ cardPrice, url })
+            cards.push({ from, cardPrice, url })
         }
     })
 
@@ -33,7 +33,7 @@ async function trollandtoad(setCode, condition, edition) {
 
 
 async function amazon(setCode, condition, edition) {
-
+    const from = "AMAZON"
     const url = "https://www.amazon.com/s?k=" + setCode
 
     // get html from amazon
@@ -66,7 +66,7 @@ async function amazon(setCode, condition, edition) {
 
         // where the title gets checked to assure correct listing
         if (cardText.includes(setCode.toUpperCase())) { //setCode has to be uppercase
-            cards.push({ cardUrl, cardPrice })
+            cards.push({ from, cardUrl, cardPrice })
         }
     })
 

@@ -34,6 +34,7 @@ async function ebay (setCode, edition, condition) {
         const cardUrl = element.itemAffiliateWebUrl
         let cardShippingCost = 0;
         let cardPrice = 0;
+        console.log(element)
         // For some reason listings will return undefined shippingOptions, if statement filters them out
         if (element.shippingOptions != undefined) {
             cardShippingCost = element.shippingOptions[0].shippingCost.value

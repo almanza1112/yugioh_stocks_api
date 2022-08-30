@@ -10,9 +10,9 @@ const ebay = require('../grabbers/ebay')
 
 
 router.get('/', (req, res) => {
-    const tntRes = scrapers.trollandtoad('mp21-en135', 'Near Mint', '1st Edition')
-    const ebayRes = ebay.ebay('mp21-en135', '1st', 'Near Mint')
-    const amazonRes = scrapers.amazon('mp21-en135', 'Near Mint', '1st Edition')
+    const tntRes = scrapers.trollandtoad('bode-en039', 'Near Mint', '1st Edition')
+    const ebayRes = ebay.ebay('bode-en039', '1st', 'Near Mint')
+    const amazonRes = scrapers.amazon('bode-en039', 'Near Mint', '1st Edition')
 
     const promises =[tntRes, ebayRes, amazonRes]
     Promise.all(promises).then(responses => {

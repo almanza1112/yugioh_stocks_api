@@ -1,16 +1,62 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+const serviceAccount = require('./yu-gi-oh--stocks-firebase-adminsdk-55vh5-b34c92b925.json');
 
-const uri = "mongodb+srv://almanza1112:compaqmv540@cluster0.rttnp.mongodb.net/yugioh_stocks?retryWrites=true&w=majority";
+initializeApp({
+    credential: cert(serviceAccount)
+});
 
-mongoose.connect(uri)
-//mongoose.connect(process.env.DATABASE_URL)
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
+
+app.post('/create', async (req, res) => {
+
+    const userJson = {
+        email: "hi@gmail.com",
+        firstName: "Bad",
+        lastName: "alm"
+    }
+
+    const docRef = db.collection('users').doc('alovelace').set(userJson);
+
+})
+
+const db = getFirestore();
+
+// FIREBASE
+/** 
+const admin = require('firebase-admin');
+const serviceAccount = require('./yu-gi-oh--stocks-firebase-adminsdk-55vh5-b34c92b925.json');
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://yu-gi-oh--stocks-default-rtdb.firebaseio.com"
+});
+
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+app.post('/create', async (req, res) => {
+    try {
+        const id = req.body.email;
+        const userJson = {
+            email: req.body.email,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        }
+
+        const response = await db.collection('users').add(userJson);
+        console.log(response)
+        res.send(response)
+    } catch(error) {
+        res.send(error);
+    }
+})
+
+const db = admin.firestore();
+
+*/
+
 
 const usersRouteer = require('./routes/users')
 app.use('/users', usersRouteer)
